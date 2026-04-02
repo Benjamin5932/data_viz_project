@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Visualisation Project · ITU 2026</title>
+  <meta name="description" content="Interactive data visualisations built for the Data Visualisation and Data-driven Decision Making course at ITU Copenhagen, 2026." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- D3.js (available globally for visualisations) -->
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+  <!-- Vega-Lite (optional declarative charts) -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Header ────────────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="header-badge">ITU Copenhagen · 2026</div>
+      <h1 class="site-title">Data Visualisation Project</h1>
+      <p class="site-subtitle">
+        Interactive explorations built for the
+        <em>Data Visualisation &amp; Data-driven Decision Making</em> course.
+      </p>
+      <nav class="header-nav">
+        <a href="#visualisations" class="nav-link">Visualisations</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="https://github.com/Benjamin5932/data_viz_project" class="nav-link nav-link--github" target="_blank" rel="noopener">
+          <!-- GitHub icon -->
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+              0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
+              -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66
+              .07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15
+              -.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.65 7.65 0 0 1 2-.27
+              c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12
+              .51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48
+              0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          GitHub
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── Main ──────────────────────────────────────────────── -->
+  <main>
+
+    <!-- Visualisations section -->
+    <section id="visualisations" class="section">
+      <div class="container">
+        <h2 class="section-title">Visualisations</h2>
+        <p class="section-description">
+          Each card below represents an interactive visualisation. Click to explore.
+        </p>
+
+        <div class="viz-grid" id="viz-grid">
+
+          <!-- ── Visualisation Card 1 (placeholder) ── -->
+          <article class="viz-card" id="card-placeholder">
+            <div class="viz-card__preview">
+              <div class="viz-placeholder" id="demo-chart"></div>
+            </div>
+            <div class="viz-card__body">
+              <span class="viz-card__tag">Coming soon</span>
+              <h3 class="viz-card__title">Your First Visualisation</h3>
+              <p class="viz-card__desc">
+                Replace this card with your actual visualisation. Add a new
+                <code>.viz-card</code> block and link it to your chart file in
+                <code>docs/charts/</code>.
+              </p>
+              <a href="#" class="viz-card__cta" aria-disabled="true">Explore →</a>
+            </div>
+          </article>
+
+          <!-- ── Add more viz cards here ── -->
+
+        </div>
+      </div>
+    </section>
+
+    <!-- About section -->
+    <section id="about" class="section section--alt">
+      <div class="container about-grid">
+        <div>
+          <h2 class="section-title">About</h2>
+          <p>
+            This site hosts interactive data visualisations produced as part of
+            the <strong>Data Visualisation and Data-driven Decision Making</strong>
+            exam at the IT University of Copenhagen.
+          </p>
+          <p>
+            All visualisations are built with open-source libraries —
+            <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a>
+            and <a href="https://vega.github.io/vega-lite/" target="_blank" rel="noopener">Vega-Lite</a>
+            — and run entirely in the browser with no backend required.
+          </p>
+        </div>
+        <div class="tech-stack">
+          <h3 class="tech-stack__title">Tech stack</h3>
+          <ul class="tech-list">
+            <li class="tech-item"><span class="tech-badge">D3.js v7</span> Custom interactive charts</li>
+            <li class="tech-item"><span class="tech-badge">Vega-Lite v5</span> Declarative visualisations</li>
+            <li class="tech-item"><span class="tech-badge">Vanilla JS</span> No build step needed</li>
+            <li class="tech-item"><span class="tech-badge">GitHub Pages</span> Free public hosting</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>© 2026 — ITU Data Visualisation Group</span>
+      <a href="https://github.com/Benjamin5932/data_viz_project" target="_blank" rel="noopener">View source on GitHub</a>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
