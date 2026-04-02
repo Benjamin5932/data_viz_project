@@ -2,7 +2,7 @@
 
 Interactive data visualisations built for the **Data Visualisation and Data-driven Decision Making** exam at the IT University of Copenhagen, 2026.
 
-🌐 **Live site:** `https://<your-github-username>.github.io/data_viz_project/`
+🌐 **Live site:** `https://benjamin5932.github.io/data_viz_project/`
 
 ---
 
