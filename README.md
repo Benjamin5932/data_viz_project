@@ -80,4 +80,4 @@ python3 -m http.server 8080 --directory docs
 3. Push any commit to `main` — the workflow handles the rest
 
 The site will be live at:
-`https://<your-github-username>.github.io/data_viz_project/`
+`https://benjamin5932.github.io/data_viz_project/`
