@@ -4,6 +4,9 @@ Interactive data visualisations built for the **Data Visualisation and Data-driv
 
 🌐 **Live site:** `https://benjamin5932.github.io/data_viz_project/`
 
+**Topics:**
+Fishing data:'https://globalfishingwatch.org/datasets-and-code/'
+
 ---
 
 ## Project structure
