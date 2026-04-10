@@ -17,10 +17,12 @@ data_viz_project/
 │   ├── index.html          ← Landing page
 │   ├── style.css           ← Design system & styles
 │   ├── main.js             ← Entry-point JS (D3 demo included)
-│   └── charts/             ← (create this) individual chart pages
-│       └── example.html
-├── data/                   ← (create this) raw & processed datasets
-├── notebooks/              ← (create this) analysis notebooks
+│   └── data/               ← site-ready processed data files
+├── data/
+│   └── processed/          ← generated summary tables for analysis
+├── datasets/               ← raw source CSVs
+├── scripts/
+│   └── preprocess_data.py  ← generates cleaned and aggregated outputs
 ├── .github/
 │   └── workflows/
 │       └── pages.yml       ← Auto-deploy on push to main
@@ -38,6 +40,18 @@ Open `docs/index.html` directly in your browser — no build step required.
 python3 -m http.server 8080 --directory docs
 # → http://localhost:8080
 ```
+
+## Preprocessing workflow
+
+Run the preprocessing script whenever the source CSVs change:
+
+```bash
+"/Users/erikaymerich/Desktop/Data Science/4 semester/data visualitation/Semester project /data_viz_project/.venv/bin/python" scripts/preprocess_data.py
+```
+
+This writes compact outputs to both `data/processed/` and `docs/data/` so the static site can load the same cleaned tables it was built from.
+
+Important note: the two source datasets do not overlap in the same year. The vessel-gap data covers 2017-2019, while the monthly fleet-effort files cover 2022. The right comparison is therefore seasonal and standardized, not a literal same-year merge.
 
 ---
 
