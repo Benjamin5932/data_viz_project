@@ -1,0 +1,28 @@
+{
+  "project": "Invisible fleet vs apparent fishing effort",
+  "note": "The vessel-gap data spans 2017-01 to 2019-12. The monthly fleet-effort files span 2022-01 to 2022-12, so the site should compare standardized summaries and seasonal profiles rather than implying the two sources overlap in the same year.",
+  "outputs": [
+    "gap_events_clean.csv",
+    "gap_monthly_summary.csv",
+    "gap_flag_summary.csv",
+    "gap_vessel_class_summary.csv",
+    "gap_spatial_1deg_summary.csv",
+    "gap_seasonality_profile.csv",
+    "fleet_monthly_summary.csv",
+    "fleet_flag_summary.csv",
+    "fleet_gear_summary.csv",
+    "fleet_spatial_1deg_summary.csv",
+    "fleet_seasonality_profile.csv",
+    "seasonality_comparison.csv"
+  ],
+  "coverage": {
+    "gap_dataset": {
+      "start": "2017-01",
+      "end": "2019-12"
+    },
+    "fleet_dataset": {
+      "start": "2022-01",
+      "end": "2022-12"
+    }
+  }
+}
