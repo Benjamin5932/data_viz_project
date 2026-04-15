@@ -162,7 +162,12 @@ def build_gap_outputs() -> dict:
 
 def build_fleet_outputs() -> dict:
     monthly_dir = DATASETS_DIR / "monthly_fleet_data"
-    monthly_files = sorted(monthly_dir.glob("fleet-monthly-csvs-10-v3-*.csv"))
+    monthly_files = sorted(monthly_dir.rglob("fleet-monthly-csvs-10-v3-*.csv"))
+    if not monthly_files:
+        raise FileNotFoundError(
+            "No fleet monthly CSV files found under datasets/monthly_fleet_data/. "
+            "Expected files matching fleet-monthly-csvs-10-v3-*.csv."
+        )
 
     month_summary_frames = []
     flag_summary_frames = []
@@ -323,10 +328,29 @@ def build_comparison_outputs(gap_manifest: dict, fleet_manifest: dict) -> None:
     comparison = comparison.sort_values("month")
     write_csv(comparison, "seasonality_comparison.csv")
 
+    gap_start = gap_manifest["coverage"]["start"]
+    gap_end = gap_manifest["coverage"]["end"]
+    fleet_start = fleet_manifest["coverage"]["start"]
+    fleet_end = fleet_manifest["coverage"]["end"]
+
+    if gap_end < fleet_start or fleet_end < gap_start:
+        coverage_note = (
+            f"No direct date overlap detected. Gap data covers {gap_start} to {gap_end}, "
+            f"while fleet-effort data covers {fleet_start} to {fleet_end}. "
+            "Use standardized or seasonal comparisons instead of same-period claims."
+        )
+    else:
+        overlap_start = max(gap_start, fleet_start)
+        overlap_end = min(gap_end, fleet_end)
+        coverage_note = (
+            f"Date overlap detected. Gap data covers {gap_start} to {gap_end} and fleet-effort data "
+            f"covers {fleet_start} to {fleet_end}. Shared window: {overlap_start} to {overlap_end}."
+        )
+
     write_json(
         {
             "project": "Invisible fleet vs apparent fishing effort",
-            "note": "The vessel-gap data spans 2017-01 to 2019-12. The monthly fleet-effort files span 2022-01 to 2022-12, so the site should compare standardized summaries and seasonal profiles rather than implying the two sources overlap in the same year.",
+            "note": coverage_note,
             "outputs": [
                 "gap_events_clean.csv",
                 "gap_monthly_summary.csv",

@@ -51,7 +51,6 @@ Run the preprocessing script whenever the source CSVs change:
 
 This writes compact outputs to both `data/processed/` and `docs/data/` so the static site can load the same cleaned tables it was built from.
 
-Important note: the two source datasets do not overlap in the same year. The vessel-gap data covers 2017-2019, while the monthly fleet-effort files cover 2022. The right comparison is therefore seasonal and standardized, not a literal same-year merge.
 
 ---
 

@@ -1,6 +1,6 @@
 {
   "project": "Invisible fleet vs apparent fishing effort",
-  "note": "The vessel-gap data spans 2017-01 to 2019-12. The monthly fleet-effort files span 2022-01 to 2022-12, so the site should compare standardized summaries and seasonal profiles rather than implying the two sources overlap in the same year.",
+  "note": "Date overlap detected. Gap data covers 2017-01 to 2019-12 and fleet-effort data covers 2017-01 to 2019-12. Shared window: 2017-01 to 2019-12.",
   "outputs": [
     "gap_events_clean.csv",
     "gap_monthly_summary.csv",
@@ -21,8 +21,8 @@
       "end": "2019-12"
     },
     "fleet_dataset": {
-      "start": "2022-01",
-      "end": "2022-12"
+      "start": "2017-01",
+      "end": "2019-12"
     }
   }
 }
