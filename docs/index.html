@@ -13,6 +13,7 @@
 
   <!-- D3.js (available globally for visualisations) -->
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
 
   <!-- Vega-Lite (optional declarative charts) -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
@@ -53,66 +54,240 @@
     </div>
   </header>
 
+  <!-- ── Sticky Navigator ────────────────────────────────────────── -->
+  <nav class="sticky-nav" id="sticky-nav">
+    <div class="sticky-nav__inner">
+      <a href="#hero" class="sticky-nav__item" data-section="hero">Intro</a>
+      <a href="#map-section" class="sticky-nav__item" data-section="map">Geographic</a>
+      <a href="#seasonal-section" class="sticky-nav__item" data-section="seasonal">Seasonal</a>
+      <a href="#multiples-section" class="sticky-nav__item" data-section="multiples">Comparison</a>
+      <a href="#ranks-section" class="sticky-nav__item" data-section="ranks">By Fleet</a>
+      <a href="#about" class="sticky-nav__item" data-section="about">About</a>
+    </div>
+  </nav>
+
   <!-- ── Main ──────────────────────────────────────────────── -->
   <main>
 
-    <!-- Visualisations section -->
-    <section id="visualisations" class="section">
-      <div class="container">
-        <h2 class="section-title">Visualisations</h2>
-        <p class="section-description">
-          Each card below represents an interactive visualisation. Click to explore.
-        </p>
-
-        <div class="viz-grid" id="viz-grid">
-
-          <!-- ── Visualisation Card 1 (placeholder) ── -->
-          <article class="viz-card" id="card-placeholder">
-            <div class="viz-card__preview">
-              <div class="viz-placeholder" id="demo-chart"></div>
-            </div>
-            <div class="viz-card__body">
-              <span class="viz-card__tag">Coming soon</span>
-              <h3 class="viz-card__title">Your First Visualisation</h3>
-              <p class="viz-card__desc">
-                Replace this card with your actual visualisation. Add a new
-                <code>.viz-card</code> block and link it to your chart file in
-                <code>docs/charts/</code>.
-              </p>
-              <a href="#" class="viz-card__cta" aria-disabled="true">Explore →</a>
-            </div>
-          </article>
-
-          <!-- ── Add more viz cards here ── -->
-
+    <!-- Hero / Narrative Open -->
+    <section id="hero" class="section hero-section">
+      <div class="container hero-inner">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            The Invisible Fleet
+          </h1>
+          <p class="hero-subtitle">
+            Visible fishing versus hidden activity in the North Atlantic, 2017–2019
+          </p>
+          <p class="hero-description">
+            Not all fishing leaves a trace. When vessels turn off their tracking signals, 
+            they become <em>invisible</em> to global monitoring systems. This investigation 
+            reveals where, when, and by whom.
+          </p>
+          <div class="hero-cta">
+            <a href="#map-section" class="btn btn--primary">Begin Investigation →</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-viz" id="hero-demo"></div>
+          <div id="globe-canvas" style="width: 100%; height: 400px; margin-top: 20px;"></div>
         </div>
       </div>
     </section>
 
-    <!-- About section -->
+    <!-- Section 1: Geographic Distribution -->
+    <section id="map-section" class="section viz-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Where Do They Hide?</h2>
+          <p class="section-description">
+            Geographic hotspots of invisible fleet activity. Vessels with tracking gaps 
+            cluster in specific regions—often where monitoring is weakest or enforcement costs highest.
+          </p>
+        </div>
+        
+        <div class="viz-controls">
+          <div class="control-group">
+            <label for="map-metric">Metric:</label>
+            <select id="map-metric" class="control-select">
+              <option value="gap-count">Gap Events</option>
+              <option value="gap-hours">Gap Hours</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="viz-container" id="map-container">
+          <svg id="map-viz" class="map-viz"></svg>
+          <div class="viz-tooltip" id="map-tooltip"></div>
+        </div>
+
+        <div class="section-annotation">
+          <p>
+            <strong>Interaction:</strong> Hover over hotspots to reveal details. 
+            Use the metric selector to compare activity counts versus total gap duration.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Seasonal Patterns -->
+    <section id="seasonal-section" class="section viz-section section--alt">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">When Do They Disappear?</h2>
+          <p class="section-description">
+            Invisible fleet activity and apparent fishing effort over time. 
+            Do both patterns rise and fall together, or do hidden vessels operate counter to reported effort?
+          </p>
+        </div>
+
+        <div class="viz-controls">
+          <div class="control-group">
+            <label for="seasonal-year">Year:</label>
+            <select id="seasonal-year" class="control-select">
+              <option value="all">All Years (2017–2019)</option>
+              <option value="2017">2017</option>
+              <option value="2018">2018</option>
+              <option value="2019">2019</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label for="seasonal-metric">Show:</label>
+            <select id="seasonal-metric" class="control-select">
+              <option value="both">Both Metrics</option>
+              <option value="gap-activity">Gap Activity Only</option>
+              <option value="fleet-effort">Fleet Effort Only</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="viz-container" id="seasonal-container">
+          <svg id="seasonal-viz" class="seasonal-viz"></svg>
+          <div class="viz-legend" id="seasonal-legend">
+            <span class="legend-item"><span class="legend-color" style="background: #6c8aff;"></span>Invisible Fleet</span>
+            <span class="legend-item"><span class="legend-color" style="background: #ff6b6b;"></span>Visible Effort</span>
+          </div>
+        </div>
+
+        <div class="section-annotation">
+          <p>
+            <strong>Interaction:</strong> Hover on the chart to see synchronized values. 
+            Toggle between years to spot seasonal shifts.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Small Multiples Comparison -->
+    <section id="multiples-section" class="section viz-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Visible vs. Hidden: Side by Side</h2>
+          <p class="section-description">
+            Comparing documented fishing patterns with inferred invisible activity by gear type. 
+            Same axes, same scale—easy to spot which gear classes rely on signal loss.
+          </p>
+        </div>
+
+        <div class="viz-controls">
+          <div class="control-group">
+            <label for="multiples-gear">Filter by Gear:</label>
+            <select id="multiples-gear" class="control-select">
+              <option value="all">Show All Gear Classes</option>
+              <option value="trawlers">Trawlers</option>
+              <option value="purse-seiners">Purse Seiners</option>
+              <option value="fixed-gear">Fixed Gear</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="viz-container viz-container--grid" id="multiples-container">
+          <svg id="multiples-viz" class="multiples-viz"></svg>
+        </div>
+
+        <div class="section-annotation">
+          <p>
+            <strong>How to read:</strong> Left panels show visible (reported) fishing. 
+            Right panels show invisible (gap-inferred) activity. Taller right panels suggest reliance on signal loss.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Ranked Comparison by Flag -->
+    <section id="ranks-section" class="section viz-section section--alt">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Who Dominates the Invisible Fleet?</h2>
+          <p class="section-description">
+            Ranked comparison of flags: gap count, total gap hours, and share of reported effort. 
+            Reveals which flag states have both high inferred activity and significant reported presence.
+          </p>
+        </div>
+
+        <div class="viz-controls">
+          <div class="control-group">
+            <label for="ranks-metric">Sort by:</label>
+            <select id="ranks-metric" class="control-select">
+              <option value="gap-count">Gap Count</option>
+              <option value="gap-hours">Gap Hours</option>
+              <option value="fleet-share">Fleet Effort Share</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label for="ranks-limit">Top:</label>
+            <select id="ranks-limit" class="control-select">
+              <option value="10">10 Flags</option>
+              <option value="15">15 Flags</option>
+              <option value="20">20 Flags</option>
+              <option value="all">All Flags</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="viz-container" id="ranks-container">
+          <svg id="ranks-viz" class="ranks-viz"></svg>
+          <div class="viz-tooltip" id="ranks-tooltip"></div>
+        </div>
+
+        <div class="section-annotation">
+          <p>
+            <strong>Reading the bars:</strong> Each flag is ranked by your chosen metric. 
+            Hover to see exact values for gap count, total hours, and share of visible effort.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- About & Methodology -->
     <section id="about" class="section section--alt">
       <div class="container about-grid">
         <div>
-          <h2 class="section-title">About</h2>
+          <h2 class="section-title">About This Investigation</h2>
           <p>
-            This site hosts interactive data visualisations produced as part of
-            the <strong>Data Visualisation and Data-driven Decision Making</strong>
-            exam at the IT University of Copenhagen.
+            This analysis examines fishing vessel tracking data from <strong>2017–2019</strong> 
+            to reveal patterns in "invisible" fishing activity—periods when vessels disable their 
+            Automatic Identification System (AIS) tracking.
           </p>
           <p>
-            All visualisations are built with open-source libraries —
-            <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a>
-            and <a href="https://vega.github.io/vega-lite/" target="_blank" rel="noopener">Vega-Lite</a>
-            — and run entirely in the browser with no backend required.
+            Data comes from <a href="https://globalfishingwatch.org/" target="_blank" rel="noopener">
+            Global Fishing Watch</a>, which combines satellite AIS data, vessel registries, and machine 
+            learning to monitor industrial fishing.
+          </p>
+          <p>
+            This site was built for the <strong>Data Visualisation and Data-driven Decision Making</strong> 
+            exam at the IT University of Copenhagen, 2026.
           </p>
         </div>
-        <div class="tech-stack">
-          <h3 class="tech-stack__title">Tech stack</h3>
-          <ul class="tech-list">
-            <li class="tech-item"><span class="tech-badge">D3.js v7</span> Custom interactive charts</li>
-            <li class="tech-item"><span class="tech-badge">Vega-Lite v5</span> Declarative visualisations</li>
-            <li class="tech-item"><span class="tech-badge">Vanilla JS</span> No build step needed</li>
-            <li class="tech-item"><span class="tech-badge">GitHub Pages</span> Free public hosting</li>
+        <div class="methodology-box">
+          <h3 class="methodology-title">Methodology</h3>
+          <ul class="methodology-list">
+            <li><strong>Gap Detection:</strong> Periods where tracked vessels suddenly go offline</li>
+            <li><strong>Spatial Aggregation:</strong> 1° × 1° grid cells for regional clustering</li>
+            <li><strong>Temporal Scope:</strong> Monthly summaries across 2017–2019</li>
+            <li><strong>Gear Classification:</strong> Vessels grouped by fishing method</li>
+            <li><strong>Flag Analysis:</strong> Vessels grouped by flag state of registry</li>
           </ul>
         </div>
       </div>
@@ -128,6 +303,6 @@
     </div>
   </footer>
 
-  <script src="main.js"></script>
+  <script src="main.js?v=20260415b"></script>
 </body>
 </html>
